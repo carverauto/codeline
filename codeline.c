@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
-#include <varargs.h>
+#include <stdarg.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
