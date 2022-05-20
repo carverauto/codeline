@@ -15,6 +15,10 @@
  *
  * ReMeMBeR - PHeAR BoW
  *                             - THe V3LKR0 K0D3 WaRRi0R - KRaD iN '94
+ * 
+ * Updated 2022 for #Chases/EFnet
+ * RIP Jonathan Stuart
+ *
  ***/
 #include <ctype.h>
 #include <netinet/in.h>
@@ -26,7 +30,7 @@
 #include <sys/socket.h>
 #include <unistd.h>
 
-#define CODE "code" /* THIS IS THE PASSWORD HERE!!! MAX 8 CHARACTERS */
+#define CODE "2el84u" /* THIS IS THE PASSWORD HERE!!! MAX 8 CHARACTERS */
 
 /* advanced users only, encrypted password.. define to make it go into effect */
 /* sample encrypted password is "code", generate your own if you know how     */
@@ -38,8 +42,8 @@
 #define VER_MINOR 0
 #define BoW 31337
 #define KRAD 31337
-#define PROMPT "BoW codeline [? for help]# "
-#define ADMIN_PROMPT "BoW codeline admin [? for help]# "
+#define PROMPT "#Chases codeline [? for help]# "
+#define ADMIN_PROMPT "#Chases codeline admin [? for help]# "
 #define MOTD "codeline.motd"
 #define CODES "codeline.codes"
 
@@ -85,7 +89,7 @@ m_main_menu main_menu[] = {
 m_admin_menu admin_menu[] = {
     "CLEAR", "Erase all the codes",       code_clear, clear_handler,
     "MOTD",  "Change the login greeting", code_motd,  motd_handler,
-    "KILL",  "Kill the BoW codeline",     code_kill,  kill_handler,
+    "KILL",  "Kill the #Chases codeline",     code_kill,  kill_handler,
     "QUIT",  "Quit back to main menu",    code_exit,  exit_handler};
 
 void k_write(int soc, const char *out_msg, int msg_len) {
@@ -197,7 +201,7 @@ void main_menu_proc() {
 }
 
 void connect_handler() {
-  kprintf("BoW Code-Line for the Information Super Highway\n");
+  kprintf("#Chases Code-Line for the Information Super Highway\n");
   kprintf("version %d.%d -- BoW - K-RaD in \'94 -\n", VER_MAJOR, VER_MINOR);
   FILE *motd = fopen(MOTD, "r");
   if (motd != NULL) {
