@@ -11,3 +11,7 @@ _______________________________________________________________________________
 
  Brotherhood of WaReZz -BoW- Brotherhood of WaReZz -BoW- Brotherhood of WaReZz
 _______________________________________________________________________________
+
+## Notes
+
+If it is crashing, attach to the process using `strace -p <pid>` to figure out why.
