@@ -108,7 +108,8 @@ void kprintf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char out_msg[80];
-  vsprintf(out_msg, fmt, args);
+  // vsprintf(out_msg, fmt, args);
+  vsnprintf(out_msg, sizeof(out_msg), fmt, args);
   int msg_len;
   for (msg_len = 0; msg_len <= 80; msg_len++) {
     if (out_msg[msg_len] == 0)
@@ -144,7 +145,7 @@ void admin_menu_proc() {
     for (cmd_idx = 0; cmd_idx < strlen(command); cmd_idx++)
       command[cmd_idx] = toupper(command[cmd_idx]);
     int found = 0;
-    for (cmd_idx = 0; cmd_idx <= code_exit; cmd_idx++) {
+    for (cmd_idx = 0; cmd_idx < sizeof(main_menu) / sizeof(m_main_menu) ; cmd_idx++) {
       if (!strcmp(admin_menu[cmd_idx].menu_command, command)) {
         (*admin_menu[cmd_idx].menu_handler)();
         found = 1;
@@ -179,7 +180,8 @@ void main_menu_proc() {
     for (cmd_idx = 0; cmd_idx < strlen(command); cmd_idx++)
       command[cmd_idx] = toupper(command[cmd_idx]);
     int found = 0;
-    for (cmd_idx = 0; cmd_idx <= code_quit; cmd_idx++) {
+    // for (cmd_idx = 0; cmd_idx <= code_quit; cmd_idx++) {
+    for (cmd_idx = 0; cmd_idx < sizeof(main_menu) / sizeof(m_main_menu); cmd_idx++) {
       if (!strcmp(main_menu[cmd_idx].menu_command, command)) {
         (*main_menu[cmd_idx].menu_handler)();
         found = 1;
