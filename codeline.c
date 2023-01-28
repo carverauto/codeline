@@ -145,7 +145,7 @@ void admin_menu_proc() {
     for (cmd_idx = 0; cmd_idx < strlen(command); cmd_idx++)
       command[cmd_idx] = toupper(command[cmd_idx]);
     int found = 0;
-    for (cmd_idx = 0; cmd_idx <= code_exit; cmd_idx++) {
+    for (cmd_idx = 0; cmd_idx < sizeof(main_menu) / sizeof(m_main_menu) ; cmd_idx++) {
       if (!strcmp(admin_menu[cmd_idx].menu_command, command)) {
         (*admin_menu[cmd_idx].menu_handler)();
         found = 1;
