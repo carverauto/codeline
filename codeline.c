@@ -225,6 +225,11 @@ int main(int argc, char *argv[]) {
   strcpy(codes_exe, argv[0]);
   int soc = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
+  if (soc < 0) {
+    perror("socket() failed");
+    exit(EXIT_FAILURE);
+  }
+
   struct sockaddr_in soc_addr;
   bzero((char *)&soc_addr, sizeof(soc_addr));
   soc_addr.sin_family = AF_INET;
