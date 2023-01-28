@@ -108,7 +108,8 @@ void kprintf(const char *fmt, ...) {
   va_list args;
   va_start(args, fmt);
   char out_msg[80];
-  vsprintf(out_msg, fmt, args);
+  // vsprintf(out_msg, fmt, args);
+  vsnprintf(out_msg, sizeof(out_msg), fmt, args);
   int msg_len;
   for (msg_len = 0; msg_len <= 80; msg_len++) {
     if (out_msg[msg_len] == 0)
