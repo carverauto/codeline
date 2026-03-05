@@ -3,8 +3,8 @@ defmodule Codeline.Protocol do
 
   alias Codeline.CommandParser
 
-  @main_prompt "#Chases codeline [? for help]# "
-  @admin_prompt "#Chases codeline admin [? for help]# "
+  @main_prompt "BoW codeline [? for help]# "
+  @admin_prompt "BoW codeline admin [? for help]# "
 
   defstruct mode: :main, motd_buffer: []
 

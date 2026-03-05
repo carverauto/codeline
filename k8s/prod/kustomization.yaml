@@ -8,7 +8,7 @@ nameSuffix: -prod
 
 images:
   - name: ghcr.io/carverauto/codeline
-    newTag: v0.1.5-amd64
+    newTag: v0.1.6-amd64
 
 patches:
   - path: deployment-patch.yaml
