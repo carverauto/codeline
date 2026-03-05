@@ -16,12 +16,14 @@ defmodule Codeline.Session do
   def init(opts) do
     socket = Keyword.fetch!(opts, :socket)
     admin_code = Keyword.fetch!(opts, :admin_code)
+    peer = Keyword.get(opts, :peer, "unknown-peer")
 
     {:ok,
      %{
        socket: socket,
        admin_code: admin_code,
-       protocol: Protocol.initial()
+       protocol: Protocol.initial(),
+       peer: peer
      }}
   end
 
@@ -79,8 +81,9 @@ defmodule Codeline.Session do
   end
 
   @impl true
-  def terminate(_reason, state) do
-    :gen_tcp.close(state.socket)
+  def terminate(reason, state) do
+    Logger.info("client disconnected #{state.peer} reason=#{inspect(reason)}")
+    _ = :gen_tcp.close(state.socket)
     :ok
   end
 
@@ -94,7 +97,10 @@ defmodule Codeline.Session do
           continue_or_stop(send_text(current_state.socket, Protocol.prompt(:main)), current_state)
 
         {:prompt, :admin} ->
-          continue_or_stop(send_text(current_state.socket, Protocol.prompt(:admin)), current_state)
+          continue_or_stop(
+            send_text(current_state.socket, Protocol.prompt(:admin)),
+            current_state
+          )
 
         {:add_code, line} ->
           :ok = Store.add_code(line)

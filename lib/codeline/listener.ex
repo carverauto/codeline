@@ -46,7 +46,10 @@ defmodule Codeline.Listener do
   end
 
   defp start_session(socket, admin_code) do
-    child_spec = {Codeline.Session, [socket: socket, admin_code: admin_code]}
+    peer = peer_label(socket)
+    Logger.info("client connected from #{peer}")
+
+    child_spec = {Codeline.Session, [socket: socket, admin_code: admin_code, peer: peer]}
 
     with {:ok, pid} <- DynamicSupervisor.start_child(Codeline.SessionSupervisor, child_spec),
          :ok <- :gen_tcp.controlling_process(socket, pid) do
@@ -66,6 +69,13 @@ defmodule Codeline.Listener do
         Logger.warning("unexpected session startup failure: #{inspect(other)}")
         :gen_tcp.close(socket)
         :error
+    end
+  end
+
+  defp peer_label(socket) do
+    case :inet.peername(socket) do
+      {:ok, {addr, port}} -> "#{:inet.ntoa(addr)}:#{port}"
+      _ -> "unknown-peer"
     end
   end
 end

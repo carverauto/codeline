@@ -75,3 +75,12 @@ Deployment characteristics:
 
 ## Runbook
 Operational details, migration notes, and rollback steps are in [docs/runbook.md](docs/runbook.md).
+
+## GitHub Actions
+Workflows:
+- CI: `.github/workflows/ci.yml` (lint, compile, test, amd64 image smoke build)
+- Deploy: `.github/workflows/deploy.yml` (build/push image to GHCR and deploy `k8s/prod`)
+
+Required repository secrets for deploy:
+- `KUBE_CONFIG`: kubeconfig content for target cluster
+- `CODELINE_ADMIN_CODE`: admin access code to store in `codeline-secret-prod`
