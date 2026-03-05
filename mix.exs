@@ -7,7 +7,7 @@ defmodule Codeline.MixProject do
       version: "0.1.0",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
-      deps: []
+      deps: deps()
     ]
   end
 
@@ -15,6 +15,12 @@ defmodule Codeline.MixProject do
     [
       extra_applications: [:logger],
       mod: {Codeline.Application, []}
+    ]
+  end
+
+  defp deps do
+    [
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
   end
 end
