@@ -1,3 +1,5 @@
+# codeline
+
 ```
 ______________________________________________________________________________
 
@@ -11,19 +13,74 @@ BoW BoW BoW BoW BoW Bo*  by: TH3 V3LKR0 K0D3 WaRRi0R  *BoW BoW BoW BoW BoW Bo
 ==============================================================================
 ```
 
-# Origin Story
+## Origin Story
+Originally found in http://www.textfiles.com/magazines/BOW/bow6.txt, `codeline.c` was created by BoW in 1994.
 
-Originally found in http://www.textfiles.com/magazines/BOW/bow6.txt
-the codeline.c was created by BoW sometime in 1994.
+This repository now includes a modern Elixir/OTP implementation for production deployment, while keeping the legacy C source for reference.
 
-It has been updated to compile on modern UNIX systems and we've added a Makefile
+## Runtime (Elixir)
+- OTP application with supervised processes
+- Per-session command handling via `GenServer`
+- ETS-only datastore (ephemeral in phase 1)
 
-## BoW
-_______________________________________________________________________________
+### Local run
+```bash
+mix deps.get
+mix test
+CODELINE_LISTEN_PORT=2323 CODELINE_ADMIN_CODE=2el84u iex -S mix
+```
 
- Brotherhood of WaReZz -BoW- Brotherhood of WaReZz -BoW- Brotherhood of WaReZz
-_______________________________________________________________________________
+Connect locally:
+```bash
+telnet 127.0.0.1 2323
+```
 
-## Notes
+## Bazel Build / Image Publish
+Build release:
+```bash
+bazel run //bazel:build_release
+```
 
-If it is crashing, attach to the process using `strace -p <pid>` to figure out why.
+Build image:
+```bash
+IMAGE_TAG=v0.1.0 bazel run //bazel:build_image
+```
+
+Push image to GHCR:
+```bash
+echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USER" --password-stdin
+IMAGE_TAG=v0.1.0 bazel run //bazel:push_image
+```
+
+Default image repo is `ghcr.io/carverauto/codeline`.
+
+## Kubernetes
+Manifests are organized with Kustomize:
+- `k8s/base`
+- `k8s/prod`
+
+Deploy production overlay:
+```bash
+kubectl apply -k k8s/prod
+```
+
+Deployment characteristics:
+- Namespace: `codeline`
+- Service type: `LoadBalancer`
+- Public telnet: `TCP/31337` -> app `TCP/31337`
+- MetalLB IPv4 pool: `k3s-pool`
+- IPv4-only service policy
+- `external-dns` hostname: `codeline.slowburnin.net`
+- Hardened workload defaults: non-root, no privilege escalation, capabilities dropped, seccomp `RuntimeDefault`, read-only root filesystem
+
+## Runbook
+Operational details, migration notes, and rollback steps are in [docs/runbook.md](docs/runbook.md).
+
+## GitHub Actions
+Workflows:
+- CI: `.github/workflows/ci.yml` (lint, compile, test, amd64 image smoke build)
+- Deploy: `.github/workflows/deploy.yml` (build/push image to GHCR and deploy `k8s/prod`)
+
+Required repository secrets for deploy:
+- `KUBE_CONFIG`: kubeconfig content for target cluster
+- `CODELINE_ADMIN_CODE`: admin access code to store in `codeline-secret-prod`

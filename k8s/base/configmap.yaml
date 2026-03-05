@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codeline-config
+data:
+  CODELINE_LISTEN_PORT: "31337"
+  CODELINE_DEFAULT_MOTD: "Welcome to codeline"

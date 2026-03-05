@@ -1,0 +1,11 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: codeline-default-deny
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: codeline
+  policyTypes:
+    - Ingress
+    - Egress

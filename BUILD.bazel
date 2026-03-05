@@ -1,0 +1,13 @@
+filegroup(
+    name = "source_files",
+    srcs = glob([
+        "mix.exs",
+        "config/**",
+        "lib/**",
+        "test/**",
+        "docker/**",
+        "k8s/**",
+        "docs/**",
+    ]),
+    visibility = ["//visibility:public"],
+)

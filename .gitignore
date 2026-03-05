@@ -1,0 +1,9 @@
+/_build
+/deps
+/dist
+/.elixir_ls
+/*.ez
+/bazel-bin
+/bazel-out
+/bazel-testlogs
+/bazel-codeline
