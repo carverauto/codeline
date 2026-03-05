@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../base
+
+nameSuffix: -prod
+
+images:
+  - name: ghcr.io/carverauto/codeline
+    newTag: v0.1.4-amd64
+
+patches:
+  - path: deployment-patch.yaml
+  - path: configmap-patch.yaml

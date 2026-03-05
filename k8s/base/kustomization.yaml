@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: codeline
+
+resources:
+  - namespace.yaml
+  - serviceaccount.yaml
+  - configmap.yaml
+  - secret.yaml
+  - deployment.yaml
+  - service.yaml
+  - poddisruptionbudget.yaml
+  - networkpolicy-default-deny.yaml
+  - networkpolicy-allow-telnet.yaml
+
+labels:
+  - pairs:
+      app.kubernetes.io/name: codeline
+      app.kubernetes.io/part-of: codeline

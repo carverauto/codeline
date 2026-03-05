@@ -1,0 +1,23 @@
+genrule(
+    name = "build_release",
+    srcs = ["build_release.sh"],
+    outs = ["build_release_runner.sh"],
+    cmd = "cp $(location build_release.sh) $@ && chmod +x $@",
+    executable = True,
+)
+
+genrule(
+    name = "build_image",
+    srcs = ["build_image.sh"],
+    outs = ["build_image_runner.sh"],
+    cmd = "cp $(location build_image.sh) $@ && chmod +x $@",
+    executable = True,
+)
+
+genrule(
+    name = "push_image",
+    srcs = ["push_image.sh"],
+    outs = ["push_image_runner.sh"],
+    cmd = "cp $(location push_image.sh) $@ && chmod +x $@",
+    executable = True,
+)

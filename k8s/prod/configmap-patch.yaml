@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: codeline-config
+data:
+  CODELINE_DEFAULT_MOTD: "Welcome to codeline production"
